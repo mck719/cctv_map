@@ -19,6 +19,8 @@ import HelloWorld3 from '../components/HelloWorld3.vue';
 
 export default {
   
+
+  
   name: 'HelloWorld',
   components:{
     HelloWorld3

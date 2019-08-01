@@ -5,10 +5,10 @@
       <div class="box" style = "float: top; line-height:0">
         <img class="map" id="he" src="../assets/Osan5.png" style="position:absolute ">
       </div>
-       <div style = "float:left; position:absolute">
+       <!-- <div style = "float:left; position:absolute">
         <img class="cctv" src="../assets/cctv2.png" v-for="location in locations" v-bind:key="location.id"
-        :style="{left: (location.longitude-127)*1000*image.width/100+'px', top: 1000-((location.latitude-37.125)*1000*(image.height/750))+'px'}" >
-      </div> 
+        :style="{left: (location.longitude-127)*1000*image.width/100+'px', top: image.height - ((location.latitude-37.125)*10000*(image.height/750))+'px'}" >
+      </div>  -->
       <!-- left: ((((location.longitude-127.007)*1000))*window.width/87)+'px' , 
       top: 1000-(((location.latitude-37.1250)*10000)*window.height/750)+'px' -->
       <div style="position: fixed; top: 0; z-index:3">
@@ -34,7 +34,12 @@
 export default {
   
   name: 'HelloWorld',
-
+  watch :{
+      image : function(){
+        var temp = document.getElementsByClassName('cctv').style;
+   
+    }
+  },
   methods: {
     zoomDo: function(){
       this.Ver-=this.Scale;
@@ -92,9 +97,6 @@ export default {
       temp.transitionDuration="200ms";
       temp.transform="scale("+this.num+")";
       
-      
-      
-      
 
     },
 
@@ -103,8 +105,8 @@ export default {
       this.window.height = window.innerHeight;
       this.image.width = document.getElementById("he").width;
       this.image.height = document.getElementById("he").height;
-      
-      
+      // if(this.image.height> 900) 
+      //   this.image.height = window.innerHeight;
    }
   },
   data(){
@@ -117,13 +119,13 @@ export default {
       
       image: {width:0, height:0},
       window:{ width: 0, height: 0},
-      locations : [{id: 1, latitude:37.125, longitude:127.003},
-      {id: 2,latitude:37.1274, longitude:127.077}, 
-      {id: 3,latitude:37.1979, longitude:127.058},
-      {id: 4,latitude:37.1522, longitude:127.090}]
+      locations : [{id: 1, latitude:37.1979, longitude:127.058},
+      {id: 3,latitude:37.1274, longitude:127.077}, 
+      {id: 4,latitude:37.1742, longitude:127.007},
+      {id: 2,latitude:37.1522, longitude:127.090}]
     }
   },
-  // {id: 4,latitude:37.1742, longitude:127.007},
+
   created(){
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
@@ -133,10 +135,7 @@ export default {
   updated(){
     console.log("update"); 
   },
-  //   handleResize2(){
-  //     this.image.width = window.
-  //   }
-  // },
+
   props: {
     msg: String
   }
@@ -183,18 +182,3 @@ top:60px
 
 </style>
 
-// #helloi {
-//     width : "65px";
-//     text-decoration: none;
-//     display: block;
-//     margin: 0 3px 3px 0;
-//     opacity: 1;
-//     -webkit-transform: scale(1, 1);
-//     -webkit-transform-origin-x:10%;
-//     -webkit-transform-origin-y:20%;
-//     -webkit-transition-timing-function: ease-out;
-//     -webkit-transition-duration: 500ms;
-//     -moz-transform: scale(1, 1);
-//     -moz-transition-timing-function: ease-out;
-//     -moz-transition-duration: 250ms; 
-// } 

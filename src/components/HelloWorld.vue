@@ -1,60 +1,142 @@
 <template>
+  
   <div>
- 
-      <viewer :options="options">
-      <div style="position: absolute">
-      <img class="map" src="../assets/Osan5.png"> 
-      <HelloWorld3> </HelloWorld3>  
+    <span style="position:absolute; z-index:4; left:5.5px; top:60px">Hello</span>
+      <div class="box" style = "float: top; line-height:0">
+        <img class="map" id="he" src="../assets/Osan5.png" style="position:absolute ">
       </div>
-      </viewer>
-      
+       <div style = "float:left; position:absolute">
+        <img class="cctv" src="../assets/cctv2.png" v-for="location in locations" v-bind:key="location.id"
+        :style="{left: (location.longitude-127)*1000*image.width/100+'px', top: 1000-((location.latitude-37.125)*1000*(image.height/750))+'px'}" >
+      </div> 
+      <!-- left: ((((location.longitude-127.007)*1000))*window.width/87)+'px' , 
+      top: 1000-(((location.latitude-37.1250)*10000)*window.height/750)+'px' -->
+      <div style="position: fixed; top: 0; z-index:3">
+      <button style = "position: relative"  @click="zoomin" > zoomin</button>
+      <button style = "position:) relative"  @click="zoomout" > zoomout</button>
+      <button style = "position: relative"  @click="zoomL" >left </button>
+      <button style = "position: relative"  @click="zoomR" >right </button>
+      <button style = "position: relative"  @click="zoomUp" > up</button>
+      <button style = "position: relative"  @click="zoomDo" > down</button>
+        Width: {{ window.width }},
+        Height: {{ window.height }},
+        ImageWidth: {{ image.width }},
+        ImageHeight: {{ image.height }}
 
+      </div>
+      
+      
   </div>
 </template>
 
 <script>
-const width = 1000;
-const height = 1000;
-import HelloWorld3 from '../components/HelloWorld3.vue';
 
 export default {
   
-
-  
   name: 'HelloWorld',
-  components:{
-    HelloWorld3
-  },
+
+  methods: {
+    zoomDo: function(){
+      this.Ver-=this.Scale;
+      var temp = document.getElementById("he").style;
+      temp.bottom= " "+this.Ver+"px"+" ";
+      temp.transitionDuration="500ms";
  
-  options:{
-    zindex: 5,
-    title: 2,
-    movable: true,
-    loop: false,
-    initialViewIndex: 2,
-    zoomable: true,
-    fullscreen: true
-   
+    },
+
+    zoomUp: function(){
+      this.Ver+=this.Scale;
+      var temp = document.getElementById("he").style;
+      temp.bottom= " "+this.Ver+"px"+" ";
+      temp.transitionDuration="500ms";
+    },
+    zoomL: function(){
+      this.Hor+=this.Scale;
+      console.log(this.Hor)
+      var temp = document.getElementById("he").style;
+      temp.left= " "+this.Hor+"px"+" ";
+      temp.transitionDuration="500ms";
+
+       temp.transitionDuration="500ms";
+
+      // this.num+=0.01;
+    },
+    zoomR: function(){
+      this.Hor-=this.Scale;
+      var temp = document.getElementById("he").style;
+      temp.left= " "+this.Hor+"px"+" ";
+      temp.transitionDuration="500ms";
+      
+      
+    },
+    zoomout: function(){
+      
+      if(this.num>1){
+      this.num-=0.05;
+      console.log(this.num);
+      var temp = document.getElementById("he").style;
+      temp.webkitTransformOrigin="  50+"+this.Hor+"px"+" 50+"+this.Ver+"px"+" ";
+      temp.transitionTimingFunction = "ease"
+      
+      temp.transitionDuration="200ms";
+      temp.transform="scale("+this.num+")";
+      }
+    },
+    zoomin: function(){
+      this.num+=0.05;
+      console.log(this.num);
+      var temp = document.getElementById("he").style;
+      temp.webkitTransformOrigin="  50+"+this.Hor+"px"+" 50+"+this.Ver+"px"+" ";
+      temp.transitionTimingFunction = "ease"
+      
+      temp.transitionDuration="200ms";
+      temp.transform="scale("+this.num+")";
+      
+      
+      
+      
+
+    },
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      this.image.width = document.getElementById("he").width;
+      this.image.height = document.getElementById("he").height;
+      
+      
+   }
   },
-  itited(viewer){
-    this.$viewer = viewer;
-  },
-  data() {
+  data(){
     return {
-      msg:'hello',
-      stageSize: {
-        width: width,
-        height: height
-      },
-      image: null,
-
-      configKonva: {
-        width: 1000,
-        height: 1000
-      },
-
-          }
+      
+      Hor: 50,
+      Ver: 50,
+      Scale:50,
+      num: 1,
+      
+      image: {width:0, height:0},
+      window:{ width: 0, height: 0},
+      locations : [{id: 1, latitude:37.125, longitude:127.003},
+      {id: 2,latitude:37.1274, longitude:127.077}, 
+      {id: 3,latitude:37.1979, longitude:127.058},
+      {id: 4,latitude:37.1522, longitude:127.090}]
+    }
   },
+  // {id: 4,latitude:37.1742, longitude:127.007},
+  created(){
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+    temp.webkitTransformOrigin="50% 50%";
+    
+  },
+  updated(){
+    console.log("update"); 
+  },
+  //   handleResize2(){
+  //     this.image.width = window.
+  //   }
+  // },
   props: {
     msg: String
   }
@@ -63,17 +145,56 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+div{
+  transform-origin: 50% 50%;
+  display: inline;
+  padding: 0%;
+  margin: 0%;
+  border:0%;
+}
 .map {
-  float:left;
-  position: relative;
-  width: 1000px;
-  height: 1000px;
+
+  float:top;
+  min-height: auto; min-width: 100%;  
+  width: 100%; height: auto; 
+  max-width: 100%;
+  max-height: auto;
+  white-space: nowrap;
+  overflow-y:scroll;
+  /* -webkit-transform-origin-x: 50%;
+  -webkit-transform-origin-y: 50%; */
+  z-index: 0;
+ 
 
 }
+.box {
+  width:5000px;
+  height:5000px;
+  z-index: 3;
+  white-space: nowrap;
+}
 
-
-
-
+.cctv{
+position:absolute; 
+z-index:4; 
+left:5.5px; 
+top:60px
+}
 
 </style>
+
+// #helloi {
+//     width : "65px";
+//     text-decoration: none;
+//     display: block;
+//     margin: 0 3px 3px 0;
+//     opacity: 1;
+//     -webkit-transform: scale(1, 1);
+//     -webkit-transform-origin-x:10%;
+//     -webkit-transform-origin-y:20%;
+//     -webkit-transition-timing-function: ease-out;
+//     -webkit-transition-duration: 500ms;
+//     -moz-transform: scale(1, 1);
+//     -moz-transition-timing-function: ease-out;
+//     -moz-transition-duration: 250ms; 
+// } 

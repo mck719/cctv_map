@@ -1,10 +1,14 @@
 <template>
   <div>
-        <div style="position: absolute">
+        <div>
         <img class="cctv" src="../assets/cctv2.png" v-for="location in locations" v-bind:key="location.id"
         :style="{ left: ((((location.longitude-127.007)*1000))*1000/87)+'px' , top: 1000-(((location.latitude-37.1250)*10000)*4/3)+'px'}" >
-       </div>
-      
+      <h2>
+      Width: {{ window.width }},
+      Height: {{ window.height }}
+      </h2>
+       </div> 
+
   </div>
 </template>
 
@@ -29,6 +33,6 @@ export default{
 <style scoped>
 .cctv{
   float:left;
-  position: absolute;
+  position: fixed;
 }
 </style>

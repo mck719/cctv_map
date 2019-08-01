@@ -59,8 +59,10 @@ export default {
       locations : [{id: 1, latitude:37.125, longitude:127.003},{id: 2,latitude:37.1274, longitude:127.077}, {id: 3,latitude:37.1979, longitude:127.058},
       {id: 4,latitude:37.1742, longitude:127.007},{id: 5,latitude:37.1522, longitude:127.09}]
     }
+  },
+  props: {
+    msg: String
   }
-
 }
 </script>
 
